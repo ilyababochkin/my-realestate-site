@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ServicePage from './pages/ServicePage';
+import AboutPage from './pages/AboutPage'; // <-- импорт новой страницы
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/service" element={<ServicePage />} />
+            <Route path="/about" element={<AboutPage />} /> {/* <-- новый маршрут */}
           </Routes>
         </main>
         <Footer />
