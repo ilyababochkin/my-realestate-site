@@ -3,7 +3,7 @@ import { FiPlus, FiMinus } from 'react-icons/fi';
 
 const FAQ = () => {
   // Индекс открытого вопроса (null, если все закрыты)
-  const [openIndex, setOpenIndex] = useState(1); // По умолчанию открыт второй вопрос
+  const [openIndex, setOpenIndex] = useState(null); // По умолчанию открыт второй вопрос
 
   // Массив с вопросами и ответами
   const faqs = [
