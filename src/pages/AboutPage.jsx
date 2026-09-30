@@ -12,7 +12,7 @@ const AboutPage = () => {
         ></div>
         <div className="relative z-10 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold uppercase leading-tight mb-6 text-black">
-            О компании «Лилия Сервис»
+            О компании «Автономные Технологии»
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Мы занимаемся автономной газификацией частных домов в Москве и области с 2015 года. 

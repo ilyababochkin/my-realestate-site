@@ -21,7 +21,7 @@ const Header = () => {
 
       <div className="flex items-center gap-2 font-bold">
         <FiPhone />
-        <span>+7 (495) 642-41-86</span>
+        <span>+7 (905) 321-22-21</span>
       </div>
     </header>
   );
