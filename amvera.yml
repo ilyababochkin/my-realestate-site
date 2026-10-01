@@ -1,10 +1,19 @@
 meta:
-  environment: node
+  environment: nodejs
   toolchain:
-    name: browser
-    version: 22
-
+    name: npm
+    version: "18"
 build:
-  additionalCommands: npm run build
+  skip: false
+  additionalCommands: null
   artifacts:
-    "dist/*": /
+    "*": /
+run:
+  persistenceMount: /data
+  scriptName: null
+  scriptArguments: null
+  nodeArguments: null
+  command: npm run build
+  containerPort: 80
+  singleton: true
+  zeroDowntime: false
