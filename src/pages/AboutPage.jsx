@@ -1,4 +1,8 @@
 import bgMesh from '../assets/bg-mesh.png';
+// Импортируем фотографии (пути могут отличаться, если вы положили их в другую папку)
+import about1 from '../assets/about-1.jpeg';
+import about2 from '../assets/about-2.jpeg';
+import about3 from '../assets/about-3.jpeg';
 
 const AboutPage = () => {
   return (
@@ -52,7 +56,36 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- БЛОК С КОМАНДОЙ ИЛИ МИССИЕЙ (по желанию) --- */}
+      {/* --- ГАЛЕРЕЯ С ФОТОГРАФИЯМИ --- */}
+      <section className="py-16 px-4 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12 text-black">Наша работа в лицах</h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          
+          <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+            <img src={about1} alt="Офис компании" className="w-full h-64 object-cover" />
+            <div className="p-4 bg-white">
+              <p className="text-center text-gray-600 text-sm">Монтаж газгольдера</p>
+            </div>
+          </div>
+
+          <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+            <img src={about2} alt="Процесс монтажа" className="w-full h-64 object-cover" />
+            <div className="p-4 bg-white">
+              <p className="text-center text-gray-600 text-sm">Доставка газгольдера</p>
+            </div>
+          </div>
+
+          <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+            <img src={about3} alt="Готовый объект" className="w-full h-64 object-cover" />
+            <div className="p-4 bg-white">
+              <p className="text-center text-gray-600 text-sm">Дом с автономным газом</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* --- БЛОК С МИССИЕЙ --- */}
       <section className="py-16 px-4 max-w-4xl mx-auto text-center">
         <h2 className="text-2xl font-bold mb-6 text-black">Наша миссия</h2>
         <p className="text-gray-600 leading-relaxed">
