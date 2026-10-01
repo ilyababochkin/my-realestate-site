@@ -2,11 +2,17 @@ import { useState, useRef } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 
-// ⬇️ ВАЖНО: Убедитесь, что все эти файлы физически лежат в папке src/assets ⬇️
+// Импорты газгольдеров (шаг 2)
 import optimaImg from '../assets/optima.jpg';
 import medvedImg from '../assets/medved.png';
 import model3Img from '../assets/model3.jpg';
 import model4Img from '../assets/model4.png';
+
+// ⬇️ НОВЫЕ ИМПОРТЫ: Картинки домов для 1-го шага ⬇️
+import house1Img from '../assets/house1.jpg';
+import house2Img from '../assets/house2.jpg';
+import house3Img from '../assets/house3.jpg';
+import house4Img from '../assets/house4.jpg';
 
 const Calculator = () => {
   // --- СОСТОЯНИЯ ---
@@ -26,13 +32,19 @@ const Calculator = () => {
   const formRef = useRef();
 
   // --- ДАННЫЕ ДЛЯ ШАГОВ ---
-  const areaOptions = ['до 90 м²', 'от 90 до 150 м²', 'от 150 до 300 м²', 'от 300 до 500 м²'];
+  // Обновлённый массив: теперь это объекты с картинками
+  const areaOptions = [
+    { label: 'до 90 м²', image: house1Img },
+    { label: 'от 90 до 150 м²', image: house2Img },
+    { label: 'от 150 до 300 м²', image: house3Img },
+    { label: 'от 300 до 500 м²', image: house4Img },
+  ];
 
   const manufacturers = [
     { id: 'optima', name: 'Оптима', image: optimaImg },
     { id: 'medved', name: 'Медведь', image: medvedImg },
-    { id: 'model3', name: 'Реал-Инвет', image: model3Img },
-    { id: 'model4', name: 'ФХМ', image: model4Img },
+    { id: 'model3', name: 'Название 3', image: model3Img },
+    { id: 'model4', name: 'Название 4', image: model4Img },
   ];
 
   const timeOptions = [
@@ -123,19 +135,26 @@ const Calculator = () => {
               <div className="mb-12">
                 <h3 className="font-bold text-xl mb-2 uppercase">КАКАЯ У ВАС ПЛОЩАДЬ?</h3>
                 <p className="text-gray-500 text-sm mb-6">Нам это необходимо знать, чтобы правильно подобрать объем газгольдера.</p>
+                
+                {/* ОБНОВЛЁННАЯ СЕТКА С КАРТИНКАМИ */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {areaOptions.map((area, i) => (
                     <div
                       key={i}
-                      onClick={() => setSelectedArea(area)}
+                      onClick={() => setSelectedArea(area.label)}
                       className={`border p-4 rounded cursor-pointer text-center transition-all ${
-                        selectedArea === area ? 'border-[#b19c7d] bg-[#b19c7d]/5' : 'border-gray-200 hover:border-gray-300'
+                        selectedArea === area.label ? 'border-[#b19c7d] bg-[#b19c7d]/5 shadow-md' : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
-                      <div className="h-20 bg-gray-100 mb-2 flex items-center justify-center">
-                        <span className="text-gray-400 text-xs">Дом</span>
+                      {/* Блок для картинки */}
+                      <div className="h-24 mb-4 overflow-hidden rounded">
+                        <img 
+                          src={area.image} 
+                          alt={area.label} 
+                          className="w-full h-full object-cover" 
+                        />
                       </div>
-                      <span className="text-sm">{area}</span>
+                      <span className="text-sm font-medium">{area.label}</span>
                     </div>
                   ))}
                 </div>
