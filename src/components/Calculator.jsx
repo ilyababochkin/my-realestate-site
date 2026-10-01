@@ -1,30 +1,38 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { FaCheck } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
 
-// ⬇️ ВАЖНО: Убедитесь, что эти файлы физически лежат в папке src/assets ⬇️
+// ⬇️ ВАЖНО: Убедитесь, что все эти файлы физически лежат в папке src/assets ⬇️
 import optimaImg from '../assets/optima.jpg';
 import medvedImg from '../assets/medved.png';
+import model3Img from '../assets/model3.jpg';
+import model4Img from '../assets/model4.png';
 
 const Calculator = () => {
   // --- СОСТОЯНИЯ ---
-  const [step, setStep] = useState(1); // Текущий шаг (1-4), 5 = форма контактов
-  const [selectedArea, setSelectedArea] = useState(null); // Шаг 1
-  const [selectedManufacturer, setSelectedManufacturer] = useState(null); // Шаг 2
-  const [distance, setDistance] = useState(30); // Шаг 3 (по умолчанию 30 км)
-  const [installTime, setInstallTime] = useState(null); // Шаг 4
-  
-  // Состояния для формы (Шаг 5)
+  const [step, setStep] = useState(1);
+  const [selectedArea, setSelectedArea] = useState(null);
+  const [selectedManufacturer, setSelectedManufacturer] = useState(null);
+  const [distance, setDistance] = useState(30);
+  const [installTime, setInstallTime] = useState(null);
+
+  // Состояния для формы
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('+7 (');
   const [isAgreed, setIsAgreed] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false); // Показывать ли экран "Спасибо"
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
+  const formRef = useRef();
 
   // --- ДАННЫЕ ДЛЯ ШАГОВ ---
   const areaOptions = ['до 90 м²', 'от 90 до 150 м²', 'от 150 до 300 м²', 'от 300 до 500 м²'];
-  
+
   const manufacturers = [
     { id: 'optima', name: 'Оптима', image: optimaImg },
     { id: 'medved', name: 'Медведь', image: medvedImg },
+    { id: 'model3', name: 'Название 3', image: model3Img },
+    { id: 'model4', name: 'Название 4', image: model4Img },
   ];
 
   const timeOptions = [
@@ -35,7 +43,6 @@ const Calculator = () => {
   ];
 
   // --- ФУНКЦИИ ---
-  // Маска для телефона (формат +7 (999) 999-99-99)
   const handlePhoneChange = (e) => {
     let input = e.target.value.replace(/\D/g, '');
     if (input.startsWith('7')) input = input.substring(1);
@@ -47,45 +54,36 @@ const Calculator = () => {
     setPhone(formatted);
   };
 
-  // Отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || phone.length < 18 || !isAgreed) return;
 
-    // Собираем все данные
-    const formData = {
-      name,
-      phone,
+    setIsSending(true);
+
+    const templateParams = {
+      name: name,
+      phone: phone,
       area: selectedArea,
-      manufacturer: selectedManufacturer,
+      manufacturer: manufacturers.find(m => m.id === selectedManufacturer)?.name || selectedManufacturer,
       distance: `${distance} км`,
-      installTime,
-      date: new Date().toLocaleString()
+      installTime: timeOptions.find(t => t.id === installTime)?.label || installTime,
     };
 
-    // 1. Вывод в консоль (F12 -> Console)
-    console.log('✅ НОВАЯ ЗАЯВКА:', formData);
-
-    // 2. Сохранение в локальную память браузера
-    const existingRequests = JSON.parse(localStorage.getItem('requests') || '[]');
-    existingRequests.push(formData);
-    localStorage.setItem('requests', JSON.stringify(existingRequests));
-
-    // 3. ОТПРАВКА В TELEGRAM
-    // ⚠️ Вставьте сюда свои данные, полученные от @BotFather и @userinfobot
-    const TOKEN = '8814656559:AAGH2tvTX14XGpdlRuNEGSjeA5tzLJcZYWo'; 
-    const CHAT_ID = '1078038664';
-
-    const text = `🔥 Новая заявка с сайта!%0A%0A👤 Имя: ${name}%0A📞 Телефон: ${phone}%0A🏠 Площадь: ${selectedArea}%0A⚙️ Производитель: ${selectedManufacturer}%0A📍 Удаленность: ${distance} км%0A📅 Монтаж: ${timeOptions.find(t => t.id === installTime)?.label || installTime}`;
-
     try {
-      await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${text}`);
-      console.log('Заявка успешно отправлена в Telegram');
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+      );
+      console.log('Заявка успешно отправлена!');
+      setIsSuccess(true);
     } catch (error) {
-      console.error('Ошибка отправки в Telegram:', error);
+      console.error('Ошибка отправки:', error);
+      alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+    } finally {
+      setIsSending(false);
     }
-
-    setIsSuccess(true);
   };
 
   return (
@@ -118,28 +116,28 @@ const Calculator = () => {
             <p className="text-gray-600">Ваша заявка принята. Мы свяжемся с вами в течение 20 минут.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            
+          <form ref={formRef} onSubmit={handleSubmit}>
+
             {/* --- ШАГ 1: ПЛОЩАДЬ --- */}
             {step === 1 && (
               <div className="mb-12">
                 <h3 className="font-bold text-xl mb-2 uppercase">КАКАЯ У ВАС ПЛОЩАДЬ?</h3>
                 <p className="text-gray-500 text-sm mb-6">Нам это необходимо знать, чтобы правильно подобрать объем газгольдера.</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                   {areaOptions.map((area, i) => (
-                     <div 
-                       key={i} 
-                       onClick={() => setSelectedArea(area)} 
-                       className={`border p-4 rounded cursor-pointer text-center transition-all ${
-                         selectedArea === area ? 'border-[#b19c7d] bg-[#b19c7d]/5' : 'border-gray-200 hover:border-gray-300'
-                       }`}
-                     >
-                       <div className="h-20 bg-gray-100 mb-2 flex items-center justify-center">
-                         <span className="text-gray-400 text-xs">Дом</span>
-                       </div>
-                       <span className="text-sm">{area}</span>
-                     </div>
-                   ))}
+                  {areaOptions.map((area, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setSelectedArea(area)}
+                      className={`border p-4 rounded cursor-pointer text-center transition-all ${
+                        selectedArea === area ? 'border-[#b19c7d] bg-[#b19c7d]/5' : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="h-20 bg-gray-100 mb-2 flex items-center justify-center">
+                        <span className="text-gray-400 text-xs">Дом</span>
+                      </div>
+                      <span className="text-sm">{area}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -151,9 +149,9 @@ const Calculator = () => {
                 <p className="text-gray-500 text-sm mb-6">Стоимость зависит от производителя газгольдера.</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {manufacturers.map((m) => (
-                    <div 
-                      key={m.id} 
-                      onClick={() => setSelectedManufacturer(m.id)} 
+                    <div
+                      key={m.id}
+                      onClick={() => setSelectedManufacturer(m.id)}
                       className={`relative border-2 rounded-lg p-6 cursor-pointer transition-all flex flex-col items-center ${
                         selectedManufacturer === m.id ? 'border-[#b19c7d] bg-[#b19c7d]/5' : 'border-gray-200 hover:border-gray-300'
                       }`}
@@ -229,45 +227,43 @@ const Calculator = () => {
 
             {/* --- КНОПКИ НАВИГАЦИИ --- */}
             <div className="flex justify-between mt-12">
-              <button 
-                type="button" 
-                onClick={() => setStep(step > 1 ? step - 1 : 1)} 
-                disabled={step === 1}
+              <button
+                type="button"
+                onClick={() => setStep(step > 1 ? step - 1 : 1)}
+                disabled={step === 1 || isSending}
                 className={`px-8 py-3 rounded font-bold uppercase transition ${
-                  step === 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#b19c7d] text-white hover:bg-[#9a8669]'
+                  step === 1 || isSending ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#b19c7d] text-white hover:bg-[#9a8669]'
                 }`}
               >
                 ← НАЗАД
               </button>
-              
+
               {step < 5 ? (
-                <button 
-                  type="button" 
-                  onClick={() => setStep(step + 1)} 
-                  // Кнопка неактивна, если не сделан выбор на текущем шаге
+                <button
+                  type="button"
+                  onClick={() => setStep(step + 1)}
                   disabled={
-                    (step === 1 && !selectedArea) || 
-                    (step === 2 && !selectedManufacturer) || 
+                    (step === 1 && !selectedArea) ||
+                    (step === 2 && !selectedManufacturer) ||
                     (step === 4 && !installTime)
-                  } 
+                  }
                   className={`px-8 py-3 rounded font-bold uppercase transition ${
                     ((step === 1 && !selectedArea) || (step === 2 && !selectedManufacturer) || (step === 4 && !installTime))
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-[#b19c7d] text-white hover:bg-[#9a8669]'
                   }`}
                 >
                   {step === 4 ? 'ПОСЛЕДНИЙ ВОПРОС' : 'ДАЛЕЕ →'}
                 </button>
               ) : (
-                <button 
-                  type="submit" 
-                  // Кнопка неактивна, пока не введены данные и не поставлена галочка
-                  disabled={!name || phone.length < 18 || !isAgreed} 
+                <button
+                  type="submit"
+                  disabled={!name || phone.length < 18 || !isAgreed || isSending}
                   className={`px-8 py-3 rounded font-bold uppercase transition ${
-                    (!name || phone.length < 18 || !isAgreed) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#b19c7d] text-white hover:bg-[#9a8669]'
+                    (!name || phone.length < 18 || !isAgreed || isSending) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[#b19c7d] text-white hover:bg-[#9a8669]'
                   }`}
                 >
-                  ОТПРАВИТЬ
+                  {isSending ? 'ОТПРАВКА...' : 'ОТПРАВИТЬ'}
                 </button>
               )}
             </div>
