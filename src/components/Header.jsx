@@ -50,7 +50,7 @@ const Header = () => {
           
           <a href="tel:+74956424186" className="px-6 py-4 font-black flex items-center gap-2 border-t border-white/20 mt-2">
             <FiPhone className="text-[#0ea5e9]" />
-            <span>+7 (495) 642-41-86</span>
+            <span>+7 (905) 321-22-21</span>
           </a>
         </nav>
       </div>
