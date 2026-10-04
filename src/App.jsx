@@ -3,18 +3,18 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ServicePage from './pages/ServicePage';
-import AboutPage from './pages/AboutPage'; // <-- импорт новой страницы
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="font-sans text-gray-800 flex flex-col min-h-screen">
+      <div className="font-sans text-[#0a1e3f] flex flex-col min-h-screen bg-white">
         <Header />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/service" element={<ServicePage />} />
-            <Route path="/about" element={<AboutPage />} /> {/* <-- новый маршрут */}
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
         <Footer />
