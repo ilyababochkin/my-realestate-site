@@ -34,8 +34,8 @@ const Calculator = () => {
   const manufacturers = [
     { id: 'optima', name: 'Оптима', image: optimaImg },
     { id: 'medved', name: 'Медведь', image: medvedImg },
-    { id: 'model3', name: 'Название 3', image: model3Img },
-    { id: 'model4', name: 'Название 4', image: model4Img },
+    { id: 'model3', name: 'Реал Инвест', image: model3Img },
+    { id: 'model4', name: 'ФХМ', image: model4Img },
   ];
 
   const timeOptions = [
