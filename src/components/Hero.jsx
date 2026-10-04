@@ -14,6 +14,13 @@ const Hero = () => {
       <div className="hidden md:block absolute top-0 right-0 w-1/3 h-full bg-[#0ea5e9] opacity-90 skew-x-12 transform origin-top-right"></div>
       <div className="hidden md:block absolute top-0 right-0 w-1/3 h-full bg-[#0a1e3f] opacity-90 skew-x-12 transform origin-top-right translate-x-16"></div>
 
+      {/* ГАЗГОЛЬДЕР НА МОБИЛЬНЫХ — как фон за текстом */}
+      <img
+        src={gasHolderImg}
+        alt=""
+        className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] max-w-[500px] object-contain opacity-10 pointer-events-none select-none"
+      />
+
       <div className="relative z-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div className="text-center md:text-left">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-black uppercase leading-[1.05] mb-4 md:mb-6 text-[#0a1e3f]">
@@ -40,11 +47,12 @@ const Hero = () => {
           </button>
         </div>
 
-        <div className="relative flex justify-center items-center h-[220px] sm:h-[350px] lg:h-[500px] mt-4 md:mt-0">
+        {/* ГАЗГОЛЬДЕР НА ДЕСКТОПЕ — справа от текста */}
+        <div className="hidden md:flex relative justify-center items-center h-[500px]">
           <img
             src={gasHolderImg}
             alt="Газгольдер"
-            className="relative z-10 w-full max-w-[220px] sm:max-w-md lg:max-w-lg object-contain drop-shadow-[0_15px_30px_rgba(10,30,63,0.3)]"
+            className="relative z-10 w-full max-w-lg object-contain drop-shadow-[0_20px_40px_rgba(10,30,63,0.4)]"
           />
         </div>
       </div>
