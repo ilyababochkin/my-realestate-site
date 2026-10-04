@@ -26,7 +26,7 @@ const Header = () => {
 
         <div className="hidden lg:flex items-center gap-2 font-black text-[#0a1e3f]">
           <FiPhone className="text-[#0ea5e9]" />
-          <span>+7 (495) 642-41-86</span>
+          <span>+7 (905) 321-22-21</span>
         </div>
 
         <button
