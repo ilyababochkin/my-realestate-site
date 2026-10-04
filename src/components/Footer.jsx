@@ -4,8 +4,8 @@ import logo from '../assets/logo.png';
 const Footer = () => {
   const socialLinks = {
     max: 'https://max.ru/u/ваш_аккаунт',
-    telegram: 'https://t.me/ваш_аккаунт',
-    whatsapp: 'https://wa.me/74956424186',
+    telegram: 'https://t.me/Aleksandr86Khaerov',
+    whatsapp: 'https://wa.me/79053212221',
   };
 
   return (
