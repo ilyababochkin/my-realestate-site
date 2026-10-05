@@ -1,6 +1,7 @@
 import about1 from '../assets/about-1.jpeg';
 import about2 from '../assets/about-2.jpeg';
 import about3 from '../assets/about-3.jpeg';
+import Gallery from '../components/Gallery';
 
 const AboutPage = () => {
   return (
@@ -53,37 +54,36 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- ГАЛЕРЕЯ С ФОТОГРАФИЯМИ --- */}
-      <section className="py-16 md:py-20 px-4 max-w-6xl mx-auto bg-[#e0f2fe]">
-        <h2 className="text-2xl md:text-4xl font-black mb-8 md:mb-12 text-[#0a1e3f] uppercase text-center">
-          Наша работа в лицах
-        </h2>
+{/* --- ГАЛЕРЕЯ С ФОТОГРАФИЯМИ --- */}
+<section className="py-16 md:py-20 px-4 max-w-6xl mx-auto bg-[#e0f2fe]">
+  <h2 className="text-2xl md:text-4xl font-black mb-8 md:mb-12 text-[#0a1e3f] uppercase text-center">
+    Наша работа в лицах
+  </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+      <img src={about1} alt="Офис компании" className="w-full h-64 object-cover" />
+      <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
+        <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Наш дружный коллектив</p>
+      </div>
+    </div>
+    <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+      <img src={about2} alt="Процесс монтажа" className="w-full h-64 object-cover" />
+      <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
+        <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Монтаж газгольдера</p>
+      </div>
+    </div>
+    <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
+      <img src={about3} alt="Готовый объект" className="w-full h-64 object-cover" />
+      <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
+        <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Дом с автономным газом</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
-            <img src={about1} alt="Офис компании" className="w-full h-64 object-cover" />
-            <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
-              <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Наш дружный коллектив</p>
-            </div>
-          </div>
-
-          <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
-            <img src={about2} alt="Процесс монтажа" className="w-full h-64 object-cover" />
-            <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
-              <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Монтаж газгольдера</p>
-            </div>
-          </div>
-
-          <div className="border-2 border-[#0a1e3f] shadow-[8px_8px_0_0_#0ea5e9] hover:-translate-y-2 transition-transform duration-300 overflow-hidden">
-            <img src={about3} alt="Готовый объект" className="w-full h-64 object-cover" />
-            <div className="p-4 bg-white border-t-2 border-[#0a1e3f]">
-              <p className="text-center text-[#0a1e3f] text-sm font-bold uppercase">Дом с автономным газом</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
+{/* --- ГАЛЕРЕЯ РАБОТ (АЛЬБОМ) --- */}
+<Gallery />
 
       {/* --- БЛОК С МИССИЕЙ --- */}
       <section className="py-16 md:py-20 px-4 max-w-4xl mx-auto text-center bg-white">
