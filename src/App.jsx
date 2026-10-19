@@ -16,8 +16,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/service" element={<ServicePage />} />
             <Route path="/about" element={<AboutPage />} />
-            {/* Новый маршрут */}
-            <Route path="/maintenance" element={<MaintenancePage />} /> 
+            <Route path="/maintenance" element={<MaintenancePage />} /> {/* <-- новый маршрут */}
           </Routes>
         </main>
         <Footer />
