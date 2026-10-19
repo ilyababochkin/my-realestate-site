@@ -8,7 +8,7 @@ const Header = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   // ⬇️ ВАЖНО: Замените эту ссылку на адрес вашего нового сайта по обслуживанию
-  const MAINTENANCE_URL = "gas-maintenance.vercel.app"; 
+  const MAINTENANCE_URL = "https://gas-maintenance.vercel.app/";
 
   return (
     <header className="sticky top-0 z-50 bg-white text-[#0a1e3f] border-b-4 border-[#0a1e3f]">

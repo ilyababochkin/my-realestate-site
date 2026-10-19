@@ -22,7 +22,7 @@ const HomePage = () => {
             Переходите в наш сервисный центр для планового ТО, заправки или ремонта оборудования.
           </p>
           <a 
-            href="https://service.acomv.pro" // Замените на ваш URL
+            href="https://gas-maintenance.vercel.app/" // Замените на ваш URL
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block bg-[#0ea5e9] text-white px-8 py-4 font-black uppercase tracking-wider hover:bg-white hover:text-[#0a1e3f] transition-colors shadow-[6px_6px_0_0_#fff]"
