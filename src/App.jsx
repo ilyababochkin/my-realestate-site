@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ServicePage from './pages/ServicePage';
 import AboutPage from './pages/AboutPage';
+import MaintenancePage from './pages/MaintenancePage'; // <-- новый импорт
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/service" element={<ServicePage />} />
             <Route path="/about" element={<AboutPage />} />
+            {/* Новый маршрут */}
+            <Route path="/maintenance" element={<MaintenancePage />} /> 
           </Routes>
         </main>
         <Footer />

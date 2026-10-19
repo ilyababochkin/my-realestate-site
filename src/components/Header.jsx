@@ -18,8 +18,10 @@ const Header = () => {
           </span>
         </Link>
 
-        <nav className="hidden md:flex gap-10 text-sm font-black uppercase tracking-widest">
-          <Link to="/" className="hover:text-[#0ea5e9] transition text-[#0a1e3f]">Газификация дома</Link>
+        {/* ДЕСКТОПНОЕ МЕНЮ */}
+        <nav className="hidden lg:flex gap-6 xl:gap-8 text-sm font-black uppercase tracking-widest">
+          <Link to="/" className="hover:text-[#0ea5e9] transition text-[#0a1e3f]">Газификация</Link>
+          <Link to="/maintenance" className="hover:text-[#0ea5e9] transition text-[#0a1e3f]">Обслуживание</Link>
           <Link to="/service" className="hover:text-[#0ea5e9] transition text-[#0a1e3f]">Сервис и ремонт</Link>
           <Link to="/about" className="hover:text-[#0ea5e9] transition text-[#0a1e3f]">О нас</Link>
         </nav>
@@ -29,22 +31,25 @@ const Header = () => {
           <span>+7 (905) 321-22-21</span>
         </div>
 
+        {/* КНОПКА БУРГЕР-МЕНЮ (для планшетов и мобильных) */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-[#0a1e3f] p-2"
+          className="lg:hidden text-[#0a1e3f] p-2"
           aria-label="Меню"
         >
           {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
         </button>
       </div>
 
+      {/* МОБИЛЬНОЕ МЕНЮ */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 bg-[#0a1e3f] text-white ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        className={`lg:hidden overflow-hidden transition-all duration-300 bg-[#0a1e3f] text-white ${
+          isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <nav className="flex flex-col py-4">
-          <Link to="/" onClick={closeMenu} className="px-6 py-4 font-black uppercase tracking-wider hover:bg-[#0ea5e9] transition">Газификация дома</Link>
+          <Link to="/" onClick={closeMenu} className="px-6 py-4 font-black uppercase tracking-wider hover:bg-[#0ea5e9] transition">Газификация</Link>
+          <Link to="/maintenance" onClick={closeMenu} className="px-6 py-4 font-black uppercase tracking-wider hover:bg-[#0ea5e9] transition">Обслуживание</Link>
           <Link to="/service" onClick={closeMenu} className="px-6 py-4 font-black uppercase tracking-wider hover:bg-[#0ea5e9] transition">Сервис и ремонт</Link>
           <Link to="/about" onClick={closeMenu} className="px-6 py-4 font-black uppercase tracking-wider hover:bg-[#0ea5e9] transition">О нас</Link>
           
